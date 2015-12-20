@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: iguana:regex_2.11:0.1.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/local/iguana/regex_2.11/0.1.0/jars/regex_2.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
