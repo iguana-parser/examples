@@ -3,12 +3,13 @@ import iguana.parsetrees.term.TermVisualization
 import org.iguana.grammar.symbol.Nonterminal
 import iguana.utils.input.Input
 import org.iguana.grammar.iggy.IggyParser
-import org.iguana.parser.Iguana
+import org.iguana.parser.{ParseError, ParseSuccess, Iguana}
 import org.scalatest.FunSuite
 
 class IguanaExamples extends FunSuite {
 
   test("SimpleGrammar") {
+
     val grammar = IggyParser.getGrammar(Input.fromPath("src/resources/grammars/Simple.iggy"))
     val input = Input.fromString("aaa")
     val start = Nonterminal.withName("A")
@@ -17,9 +18,10 @@ class IguanaExamples extends FunSuite {
 
     assert(result.isParseSuccess)
 
-    if (result.isParseSuccess) {
-      SPPFVisualization.generate(result.asParseSuccess().getSPPFNode, "graphs", "simple_sppf")
-      TermVisualization.generate(result.asParseSuccess().getTree(), "graphs", "simple_terms")
+    result match {
+      case s:ParseSuccess => SPPFVisualization.generate(s.sppfNode, "graphs", "simple_sppf")
+                             TermVisualization.generate(s.getTree, "graphs", "simple_terms")
+      case _              => _
     }
   }
 
@@ -36,10 +38,11 @@ class IguanaExamples extends FunSuite {
 
     assert(result.isParseSuccess)
 
-    if (result.isParseSuccess) {
-      SPPFVisualization.generate(result.asParseSuccess().getSPPFNode, "graphs", "xml_sppf")
-      TermVisualization.generate(result.asParseSuccess().getTree(), "graphs", "xml_terms")
-      TermVisualization.generateWithoutLayout(result.asParseSuccess().getTree(), "graphs", "xml_terms_no_layout")
+    result match {
+      case s:ParseSuccess => SPPFVisualization.generate(s.sppfNode, "graphs", "xml_sppf")
+                             TermVisualization.generate(s.getTree, "graphs", "xml_terms")
+                             TermVisualization.generateWithoutLayout(s.getTree, "graphs", "xml_terms_no_layout")
+      case _              =>
     }
 
     val input2 = """|<note>
@@ -59,10 +62,11 @@ class IguanaExamples extends FunSuite {
 
     assert(result.isParseSuccess)
 
-    if (result.isParseSuccess) {
-      SPPFVisualization.generate(result.asParseSuccess().getSPPFNode, "graphs", "expr_sppf")
-      TermVisualization.generate(result.asParseSuccess().getTree(), "graphs", "expr_terms")
-      TermVisualization.generateWithoutLayout(result.asParseSuccess().getTree(), "graphs", "expr_terms_no_layout")
+    result match {
+      case s:ParseSuccess => SPPFVisualization.generate(s.sppfNode, "graphs", "expr_sppf")
+                             TermVisualization.generate(s.getTree, "graphs", "expr_terms")
+                             TermVisualization.generateWithoutLayout(s.getTree, "graphs", "expr_terms_no_layout")
+      case _              =>
     }
   }
 
@@ -82,10 +86,11 @@ class IguanaExamples extends FunSuite {
 
     assert(result.isParseSuccess)
 
-    if (result.isParseSuccess) {
-      SPPFVisualization.generate(result.asParseSuccess().getSPPFNode, "graphs", "indentation_sppf")
-      TermVisualization.generate(result.asParseSuccess().getTree(), "graphs", "indentation_terms")
-      TermVisualization.generateWithoutLayout(result.asParseSuccess().getTree(), "graphs", "indentation_terms_no_layout")
+    result match {
+      case s:ParseSuccess => SPPFVisualization.generate(s.sppfNode, "graphs", "indentation_sppf")
+                             TermVisualization.generate(s.getTree, "graphs", "indentation_terms")
+                             TermVisualization.generateWithoutLayout(s.getTree, "graphs", "indentation_terms_no_layout")
+      case _              =>
     }
 
     val input2 = """let x = 1
